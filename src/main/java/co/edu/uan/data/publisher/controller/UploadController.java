@@ -33,7 +33,7 @@ public class UploadController {
   }
   
   @PostMapping("/data")
-  public ResponseEntity<Integer> uploadData(@RequestHeader(required = true) AuthenticatedRequest authentication, @RequestBody @Validated UploadDataRequest request) {
+  public ResponseEntity<Integer> uploadData(@RequestBody @Validated UploadDataRequest request) {
 	  throw new UnauthorizedException();
   }
   
