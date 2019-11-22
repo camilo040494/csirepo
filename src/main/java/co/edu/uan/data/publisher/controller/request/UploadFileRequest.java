@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class UploadFileRequest {
 	
-	private byte[] data;
+	private String data;
 	
 }

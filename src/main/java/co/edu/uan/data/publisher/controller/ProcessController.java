@@ -8,11 +8,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.edu.uan.data.publisher.controller.request.AuthenticatedRequest;
 import co.edu.uan.data.publisher.controller.request.ProcessRequest;
 import co.edu.uan.data.publisher.service.ProcessService;
 
@@ -21,7 +19,7 @@ import co.edu.uan.data.publisher.service.ProcessService;
 @CrossOrigin(origins = "*")
 public class ProcessController {
   
-  @Autowired
+//  @Autowired
   private ProcessService processService;
   
   @GetMapping(value = "/health")
@@ -30,7 +28,7 @@ public class ProcessController {
  }
   
   @PostMapping("/run")
-  public ResponseEntity<Integer> create(@RequestHeader(required = true) AuthenticatedRequest authentication, @RequestBody @Validated ProcessRequest request) {
+  public ResponseEntity<Integer> create(@RequestBody @Validated ProcessRequest request) {
     return null;
   }
   

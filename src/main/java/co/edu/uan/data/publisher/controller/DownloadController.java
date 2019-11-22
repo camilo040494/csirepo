@@ -20,7 +20,7 @@ import co.edu.uan.data.publisher.service.DownloadService;
 @CrossOrigin(origins = "*")
 public class DownloadController {
   
-  @Autowired
+//  @Autowired
   private DownloadService downloadService;
   
   @GetMapping(value = "/health")
@@ -29,7 +29,7 @@ public class DownloadController {
  }
   
   @GetMapping("/document")
-  public ResponseEntity<byte[]> downloadDocument(@RequestHeader(required = true) AuthenticatedRequest authentication, @RequestBody @Validated DownloadRequest request) {
+  public ResponseEntity<byte[]> downloadDocument(@RequestBody @Validated DownloadRequest request) {
 	  return null;
 	  //    return new ResponseEntity<>(authentication, HttpStatus.OK);
   }

@@ -5,6 +5,9 @@ management:
         include: '*'
 server:
   port: 8090
+kafka:
+  server: 192.168.0.17:2181
+  topic: test_hdfs
 spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect

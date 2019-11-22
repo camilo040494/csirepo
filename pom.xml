@@ -22,7 +22,8 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
+		</dependency><!-- https://mvnrepository.com/artifact/org.apache.avro/avro-tools -->
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-rest</artifactId>
@@ -86,6 +87,21 @@
 		    <groupId>com.amazonaws</groupId>
 		    <artifactId>aws-java-sdk</artifactId>
 		    <version>1.11.572</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.kafka</groupId>
+		    <artifactId>kafka-clients</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.j256.simplemagic/simplemagic -->
+		<dependency>
+		    <groupId>com.j256.simplemagic</groupId>
+		    <artifactId>simplemagic</artifactId>
+		    <version>1.14</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
