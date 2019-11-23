@@ -1,6 +1,7 @@
 package co.edu.uan.data.publisher.service.kafka;
 
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -48,12 +49,12 @@ public class KafkaProducerServiceImpl implements GenericProducerService {
 		kafkaProperties.put(RETRIES_PROPERTY, RETRIES_NUMBER);
 		kafkaProperties.put(LINGER_MS_PROPERTY, LINGERS_MS);
 
-		producer = new KafkaProducer<String, String>(kafkaProperties);
+		producer = new KafkaProducer<>(kafkaProperties);
 	}
 
 	@Override
-	public void send(String topic, String row) throws Exception {
-		ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, row);
+	public void send(String topic, String row) throws InterruptedException, ExecutionException {
+		ProducerRecord<String, String> record = new ProducerRecord<>(topic, row);
 		try {
 			log.debug("Sending message to topic [{}], payload [{}]", topic, row);
 			producer.send(record);
@@ -65,7 +66,7 @@ public class KafkaProducerServiceImpl implements GenericProducerService {
 	}
 		
 	@Override
-	public void send(String row) throws Exception {
+	public void send(String row) throws InterruptedException, ExecutionException {
 		String topic = applicationKafkaProperties.getTopic();
 		send(topic, row);
 	}

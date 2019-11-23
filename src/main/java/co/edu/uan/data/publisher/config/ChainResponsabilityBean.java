@@ -10,16 +10,9 @@ import co.edu.uan.data.publisher.service.chainofresponsability.HandlerValidator;
 @Configuration
 public class ChainResponsabilityBean {
 	
-	@Qualifier(value = "nameValidator")
-	@Autowired
-	private HandlerValidator nameValidator;
-	
-	@Qualifier(value = "sizeValidator")
-	@Autowired
-	private HandlerValidator sizeValidator;
-	
 	@Bean({"handlerValidatorBean"})
-	public HandlerValidator handlerValidatorBean(){
+	public HandlerValidator handlerValidatorBean(@Autowired @Qualifier(value = "nameValidator") HandlerValidator nameValidator, 
+			@Autowired @Qualifier(value = "sizeValidator") HandlerValidator sizeValidator){
 		nameValidator.setNext(sizeValidator);
 		return nameValidator;
 	}

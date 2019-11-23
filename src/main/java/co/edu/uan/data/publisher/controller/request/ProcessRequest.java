@@ -9,7 +9,8 @@ import lombok.Setter;
 @Setter
 public class ProcessRequest {
 	
-	private Date initialDate, finalDate;
+	private Date initialDate;
+	private Date finalDate;
 	private boolean includeUploaders;
 	private String urlToPost;
 	

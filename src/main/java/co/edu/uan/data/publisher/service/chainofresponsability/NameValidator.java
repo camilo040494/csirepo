@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class NameValidator extends HandlerValidator {
 
+	private static final String LOG_IO_READING = "Error when reading the file with message: [{}]";
 	private static final String LOG_CHECKING_FILE_TYPE = "Checking file type";
 	private static final String LOG_CORRUPTED_FILE = "Could not recognized file extension [{}]";
 	private static final String LOG_INVALID_FILE_EXTENSION = "Invalid file extension [{}]";
@@ -32,7 +33,7 @@ public class NameValidator extends HandlerValidator {
 		try {
 			info = util.findMatch(file.getAbsoluteFile());
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(LOG_IO_READING, e.getCause());
 			return false;
 		}
 

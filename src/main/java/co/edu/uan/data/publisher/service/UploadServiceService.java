@@ -5,8 +5,8 @@ import co.edu.uan.data.publisher.controller.request.UploadFileRequest;
 
 public interface UploadServiceService {
 	
-	public void uploadFile(UploadFileRequest file);
+	public long uploadFile(UploadFileRequest file);
 	
-	public void uploadData(LoadDataAdapter data);
+	public long uploadData(LoadDataAdapter data);
 	
 }

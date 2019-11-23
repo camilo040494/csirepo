@@ -39,7 +39,7 @@ public class User {
 	private Role role;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Transaction> transactions = new ArrayList<Transaction>();
+	private List<Transaction> transactions = new ArrayList<>();
 
 	public void addTransaction(Transaction newTransaction) {
 		newTransaction.setUser(this);

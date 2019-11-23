@@ -23,7 +23,7 @@ public class ApiError {
   private String message;
   private String debugMessage;
   @JsonInclude(Include.NON_EMPTY)
-  private List<ApiSubError> subErrors = new ArrayList<ApiSubError>();
+  private List<ApiSubError> subErrors = new ArrayList<>();
 
   private ApiError() {
       timestamp = LocalDateTime.now();

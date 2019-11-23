@@ -28,5 +28,8 @@ public class Transaction {
 	@JoinColumn(name = "user_id")
 	@JsonIgnore
 	private User user;
+	
+	@Column
+	private long uuid;
 
 }
