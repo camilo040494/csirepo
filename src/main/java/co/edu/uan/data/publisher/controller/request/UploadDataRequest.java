@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class UploadDataRequest {
 	
-	private String username;
-	private Location location;
+	protected String username;
+	protected Location location;
 	
 }

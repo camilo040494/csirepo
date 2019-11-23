@@ -1,5 +1,7 @@
 package co.edu.uan.data.publisher.controller.request;
 
+import org.apache.commons.lang3.StringUtils;
+
 import co.edu.uan.data.publisher.adapter.LoadDataAdapter;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,10 +10,13 @@ import lombok.Setter;
 @Setter
 public class UploadDataRequestAdapter extends UploadDataRequest implements LoadDataAdapter {
 
+	private static final String DEFAULT_SEPARATOR = ";";
+	private String movil;
+	private String tipoDelito;
+	
 	@Override
 	public String parseToComputable() {
-		// TODO Auto-generated method stub
-		return null;
+		return StringUtils.join(new String[]{movil, tipoDelito}, DEFAULT_SEPARATOR);
 	}
 	
 	
