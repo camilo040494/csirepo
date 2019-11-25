@@ -6,8 +6,8 @@ management:
 server:
   port: 8090
 kafka:
-  server: 192.168.0.17:2181
   topic: test_hdfs
+  server: 192.168.0.17:9092
 spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect

@@ -1,5 +1,6 @@
 package co.edu.uan.data.publisher.service.kafka;
 
+import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
@@ -53,11 +54,19 @@ public class KafkaProducerServiceImpl implements GenericProducerService {
 	}
 
 	@Override
-	public void send(String topic, String row) throws InterruptedException, ExecutionException {
-		ProducerRecord<String, String> record = new ProducerRecord<>(topic, row);
+	public void send(String topic, String key, String row) throws InterruptedException, ExecutionException {
+		ProducerRecord<String, String> record = new ProducerRecord<>(topic, key, row);
 		try {
 			log.debug("Sending message to topic [{}], payload [{}]", topic, row);
-			producer.send(record);
+			producer.send(record, (metada, exception) -> {
+				if (Objects.nonNull(metada))					
+					log.debug("Sending message to topic [{}], payload [{}] was received sucessfully", topic, row);
+				else {
+					if (Objects.nonNull(exception))
+						log.error("Message to topic [{}], payload [{}] failed with exception error [{}]", topic, row, exception.getCause());
+				}
+			});
+			producer.flush();
 		} catch (Exception e) {
 			log.error("Connection lost to topic [{}], payload [{}]", topic, row);
 			init();
@@ -66,9 +75,9 @@ public class KafkaProducerServiceImpl implements GenericProducerService {
 	}
 		
 	@Override
-	public void send(String row) throws InterruptedException, ExecutionException {
+	public void send(String key, String row) throws InterruptedException, ExecutionException {
 		String topic = applicationKafkaProperties.getTopic();
-		send(topic, row);
+		send(topic, key, row);
 	}
 
 	@PreDestroy

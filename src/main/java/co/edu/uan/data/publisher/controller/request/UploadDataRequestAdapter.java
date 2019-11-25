@@ -19,5 +19,4 @@ public class UploadDataRequestAdapter extends UploadDataRequest implements LoadD
 		return StringUtils.join(new String[]{movil, tipoDelito}, DEFAULT_SEPARATOR);
 	}
 	
-	
 }

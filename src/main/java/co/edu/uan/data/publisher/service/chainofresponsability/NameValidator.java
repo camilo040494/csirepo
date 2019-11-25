@@ -31,23 +31,23 @@ public class NameValidator extends HandlerValidator {
 		ContentInfoUtil util = new ContentInfoUtil();
 		ContentInfo info = null;
 		try {
-			info = util.findMatch(file.getAbsoluteFile());
+			info = util.findMatch(file.getAbsolutePath());
 		} catch (IOException e) {
 			log.error(LOG_IO_READING, e.getCause());
 			return false;
 		}
 
-		if (Objects.isNull(info)) {
-			log.error(LOG_CORRUPTED_FILE, file.getName());
-			return false;
-		}
-
-		String contentType = info.getContentType().toString();
-
-		if (!checkContentType(contentType.toLowerCase())) {
-			log.error(LOG_INVALID_FILE_EXTENSION, contentType.toLowerCase());
-			return false;
-		}
+//		if (Objects.isNull(info)) {
+//			log.error(LOG_CORRUPTED_FILE, file.getName());
+//			return false;
+//		}
+//
+//		String contentType = info.getContentType().toString();
+//
+//		if (!checkContentType(contentType.toLowerCase())) {
+//			log.error(LOG_INVALID_FILE_EXTENSION, contentType.toLowerCase());
+//			return false;
+//		}
 
 		return checkNext(file);
 	}

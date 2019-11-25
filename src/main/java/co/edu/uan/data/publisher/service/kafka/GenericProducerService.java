@@ -4,8 +4,8 @@ import java.util.concurrent.ExecutionException;
 
 public interface GenericProducerService {
 	
-	void send(String topic, String row) throws InterruptedException, ExecutionException;
+	void send(String topic, String key, String row) throws InterruptedException, ExecutionException;
 	
-	void send(String row) throws InterruptedException, ExecutionException;
+	void send(String key, String row) throws InterruptedException, ExecutionException;
 	
 }

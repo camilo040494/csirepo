@@ -13,7 +13,7 @@ public class TransactionBuilder {
 	
 	public static Transaction createEmptyTransaction() {
 		Transaction transaction = new Transaction();
-		transaction.setUuid(UUID.randomUUID().timestamp());
+		transaction.setUuid(System.currentTimeMillis());
 		transaction.setStatus(StatusEnum.FAILED);
 		return transaction;
 	}

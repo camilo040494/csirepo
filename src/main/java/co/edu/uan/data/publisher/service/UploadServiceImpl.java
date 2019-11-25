@@ -54,12 +54,15 @@ public class UploadServiceImpl implements UploadServiceService {
 		boolean validate = handlerValidatorBean.validate(parsedFile);
 		if (!validate) {
 			//TODO
+			deleteFile(parsedFile);
 			throw new RuntimeException();
 		}
 		
+		log.info("Validations passed correctly");
+		
 		try (BufferedReader br = new BufferedReader(new FileReader(parsedFile))) {
 			for (String line = null; StringUtils.isNoneEmpty((line = br.readLine()));) {
-				genericProducer.send(line);
+				genericProducer.send(Long.toString(transaction.getUuid()), line);
 			}
 		} catch (IOException e) {
 			log.error(ERROR_READING_FILE, e.getCause());
@@ -69,6 +72,12 @@ public class UploadServiceImpl implements UploadServiceService {
 			throw new RuntimeException();
 		}
 		
+		deleteFile(parsedFile);
+		
+		return transaction.getUuid();
+	}
+
+	private void deleteFile(File parsedFile) {
 		try {
 			Files.delete(parsedFile.toPath());
 		} catch (NoSuchFileException | DirectoryNotEmptyException e) {
@@ -77,15 +86,13 @@ public class UploadServiceImpl implements UploadServiceService {
 		} catch (IOException e) {
 			log.error(ERROR_IO_FILE_DELETION, parsedFile.toPath(), e.getCause());
 		}
-		
-		return transaction.getUuid();
 	}
 
 	@Override
 	public long uploadData(LoadDataAdapter data) {
 		Transaction transaction = TransactionBuilder.createEmptyTransaction();
 		try {
-			genericProducer.send(data.parseToComputable());
+			genericProducer.send(Long.toString(transaction.getUuid()), data.parseToComputable());
 		} catch (InterruptedException | ExecutionException e) {
 			log.error(ERROR_UPSTREAMING_DATA, e.getCause());
 		}
