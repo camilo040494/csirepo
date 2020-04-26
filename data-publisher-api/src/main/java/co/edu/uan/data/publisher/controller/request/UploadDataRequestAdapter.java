@@ -12,11 +12,11 @@ public class UploadDataRequestAdapter extends UploadDataRequest implements LoadD
 
 	private static final String DEFAULT_SEPARATOR = ";";
 	private String movil;
-	private String tipoDelito;
+	private String movilidadVictima;
 	
 	@Override
 	public String parseToComputable() {
-		return StringUtils.join(new String[]{movil, tipoDelito}, DEFAULT_SEPARATOR);
+		return StringUtils.join(new String[]{movil, movilidadVictima}, DEFAULT_SEPARATOR);
 	}
 	
 }

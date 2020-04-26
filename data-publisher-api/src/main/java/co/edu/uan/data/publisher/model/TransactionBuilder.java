@@ -1,7 +1,5 @@
 package co.edu.uan.data.publisher.model;
 
-import java.util.UUID;
-
 import lombok.Data;
 
 @Data

@@ -9,19 +9,28 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.ExecutionException;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.PrecisionModel;
+import com.vividsolutions.jts.geom.impl.CoordinateArraySequence;
+
 import co.edu.uan.data.publisher.adapter.LoadDataAdapter;
+import co.edu.uan.data.publisher.controller.request.UploadDataRequest;
 import co.edu.uan.data.publisher.controller.request.UploadFileRequest;
+import co.edu.uan.data.publisher.model.DataLocation;
+import co.edu.uan.data.publisher.model.MovilEnum;
 import co.edu.uan.data.publisher.model.Transaction;
 import co.edu.uan.data.publisher.model.TransactionBuilder;
+import co.edu.uan.data.publisher.repository.DataLocationRepository;
 import co.edu.uan.data.publisher.service.chainofresponsability.HandlerValidator;
-import co.edu.uan.data.publisher.service.kafka.GenericProducerService;
 import co.edu.uan.data.publisher.util.validator.ParserFileUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,18 +38,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UploadServiceImpl implements UploadServiceService {
 
-	private static final String ERROR_KAFKA_SERVER = "An error happenned in the comunication with the server with message: [{}]";
 	private static final String ERROR_IO_FILE_DELETION = "An IO error happened when trying to delete file [{}] with cause:[{}]";
 	private static final String ERROR_TEMP_FILE_DELETION = "An error happened trying to delete temporally file [{}] with message: [{}]";
 	private static final String ERROR_UPSTREAMING_DATA = "Error loading data: [{}]";
 	private static final String ERROR_READING_FILE = "Error loading file with cause: [{}]";
-
-	@Autowired
-	private GenericProducerService genericProducer;
 	
 	@Autowired
 	@Qualifier("handlerValidatorBean")
 	private HandlerValidator handlerValidatorBean;
+	
+	@Autowired
+	private DataLocationRepository dataLocationRepository;
 
 	@Override
 	public long uploadFile(UploadFileRequest file) {
@@ -62,13 +70,10 @@ public class UploadServiceImpl implements UploadServiceService {
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(parsedFile))) {
 			for (String line = null; StringUtils.isNoneEmpty((line = br.readLine()));) {
-				genericProducer.send(Long.toString(transaction.getUuid()), line);
+				
 			}
 		} catch (IOException e) {
 			log.error(ERROR_READING_FILE, e.getCause());
-			throw new RuntimeException();
-		} catch (ExecutionException | InterruptedException e) {
-			log.error(ERROR_KAFKA_SERVER, e.getCause());
 			throw new RuntimeException();
 		}
 		
@@ -89,14 +94,38 @@ public class UploadServiceImpl implements UploadServiceService {
 	}
 
 	@Override
+	public long uploadData(UploadDataRequest data) {
+	  Transaction transaction = TransactionBuilder.createEmptyTransaction();
+	  DataLocation location = new DataLocation();
+	  
+	  Point point = parseToPoint(data.getLocation ());
+   
+   location.setLocation(point);
+	  location.setMovilAgresor(MovilEnum.ARMA_BLANCA);
+	  
+   dataLocationRepository.save(location);
+	  return transaction.getUuid();
+	}
+
+  private Point parseToPoint(org.wololo.geojson.Point data) {
+    double[] coordinates = data.getCoordinates();
+	  Coordinate[] coords = new Coordinate[1];
+   coords[0] = new Coordinate(coordinates[0], coordinates[1]);
+   CoordinateArraySequence coordArraySeq = new CoordinateArraySequence(coords);
+   Point point = new Point(coordArraySeq, new GeometryFactory(new PrecisionModel(), 4326));
+    return point;
+  }
+	  
+	@Override
 	public long uploadData(LoadDataAdapter data) {
 		Transaction transaction = TransactionBuilder.createEmptyTransaction();
-		try {
-			genericProducer.send(Long.toString(transaction.getUuid()), data.parseToComputable());
-		} catch (InterruptedException | ExecutionException e) {
-			log.error(ERROR_UPSTREAMING_DATA, e.getCause());
-		}
-		return transaction.getUuid();
+		throw new NotImplementedException("Not implemented");
+//		try {
+//			genericProducer.send(Long.toString(transaction.getUuid()), data.parseToComputable());
+//		} catch (InterruptedException | ExecutionException e) {
+//			log.error(ERROR_UPSTREAMING_DATA, e.getCause());
+//		}
+//		return transaction.getUuid();
 	}
 
 }

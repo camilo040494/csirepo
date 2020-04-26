@@ -14,8 +14,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency><!-- https://mvnrepository.com/artifact/org.apache.avro/avro-tools -->
-		
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-rest</artifactId>
@@ -40,7 +39,14 @@
 			<groupId>com.okta.spring</groupId>
 			<artifactId>okta-spring-boot-starter</artifactId>
 		</dependency>
-
+		<dependency>
+	        <groupId>org.hibernate</groupId>
+	        <artifactId>hibernate-core</artifactId>
+	    </dependency>
+		<dependency>
+	        <groupId>org.hibernate</groupId>
+	        <artifactId>hibernate-spatial</artifactId>
+	    </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -76,6 +82,12 @@
 		    <groupId>com.amazonaws</groupId>
 		    <artifactId>aws-java-sdk</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.geotools/gt-geojson -->
+		<!-- <dependency>
+		    <groupId>org.geotools</groupId>
+		    <artifactId>gt-geojson</artifactId>
+		    <version>23.0</version>
+		</dependency> -->
 		<dependency>
 		    <groupId>org.apache.kafka</groupId>
 		    <artifactId>kafka-clients</artifactId>
@@ -90,6 +102,13 @@
 		    <groupId>com.j256.simplemagic</groupId>
 		    <artifactId>simplemagic</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.wololo/jts2geojson -->
+		<dependency>
+		    <groupId>org.wololo</groupId>
+		    <artifactId>jts2geojson</artifactId>
+		    <version>0.14.3</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -101,5 +120,11 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
+	<!-- <repositories>
+    <repository>
+      <id>osgeo</id>
+      <name>GeoJson</name>
+      <url>https://repo.osgeo.org/repository/release/</url>
+    </repository>
+  </repositories> -->
 </project>

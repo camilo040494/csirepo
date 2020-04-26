@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Data
-@Table(name = "user")
+@Table(name = "application_user")
 @Entity
 public class User {
 
@@ -36,14 +36,22 @@ public class User {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "role_id")
 	@JsonIgnore
-	private Role role;
+	private UserRole role;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Transaction> transactions = new ArrayList<>();
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<DataLocation> locations = new ArrayList<>();
 
 	public void addTransaction(Transaction newTransaction) {
 		newTransaction.setUser(this);
 		transactions.add(newTransaction);
+	}
+	
+	public void addLocation(DataLocation newLocation) {
+	  newLocation.setUser(this);
+	  locations.add(newLocation);
 	}
 
 }

@@ -11,9 +11,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Data
-@Table(name = "role")
+@Table
 @Entity
-public class Role {
+public class UserRole {
   
   @Id
   @GeneratedValue
@@ -21,6 +21,6 @@ public class Role {
   private int id;
   
   @Column
-  private UserRoleEnumator userRole;
+  private UserRoleEnumator roleType;
  
 }

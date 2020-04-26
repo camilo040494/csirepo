@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.edu.uan.data.publisher.controller.request.UploadDataRequest;
 import co.edu.uan.data.publisher.controller.request.UploadDataRequestAdapter;
 import co.edu.uan.data.publisher.controller.request.UploadFileRequest;
 import co.edu.uan.data.publisher.controller.response.OkResponse;
@@ -31,7 +32,7 @@ public class UploadController {
   
   @PostMapping("/data")
   public ResponseEntity<Long> uploadData(@RequestBody @Validated UploadDataRequestAdapter request) {
-	  long uploadData = uploadService.uploadData(request);
+	  long uploadData = uploadService.uploadData((UploadDataRequest) request);
 	  return new OkResponse<>(uploadData);
   }
   
