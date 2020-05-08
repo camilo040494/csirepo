@@ -11,12 +11,10 @@ import lombok.Setter;
 public class UploadDataRequestAdapter extends UploadDataRequest implements LoadDataAdapter {
 
 	private static final String DEFAULT_SEPARATOR = ";";
-	private String movil;
-	private String movilidadVictima;
 	
 	@Override
 	public String parseToComputable() {
-		return StringUtils.join(new String[]{movil, movilidadVictima}, DEFAULT_SEPARATOR);
+		return StringUtils.join(new String[]{movil, Integer.toString(edadVictima), movilidadVictimario, movilidadVictima}, DEFAULT_SEPARATOR);
 	}
 	
 }

@@ -102,6 +102,7 @@ public class UploadServiceImpl implements UploadServiceService {
    
    location.setLocation(point);
 	  location.setMovilAgresor(MovilEnum.ARMA_BLANCA);
+	  location.setVictimsAge(data.getEdadVictima());
 	  
    dataLocationRepository.save(location);
 	  return transaction.getUuid();

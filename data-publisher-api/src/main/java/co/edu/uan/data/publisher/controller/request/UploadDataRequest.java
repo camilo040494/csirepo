@@ -12,4 +12,9 @@ public class UploadDataRequest {
 	protected String username;
 	protected Point location;
 	
+	protected int edadVictima;
+ protected String movilidadVictimario;
+ protected String movil;
+ protected String movilidadVictima;
+	
 }
